@@ -5,16 +5,15 @@ import { Observable } from 'rxjs/Rx';
 // Import RxJs required methods
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
-import { IAudit } from './../audit';
+import { IAudit } from './../interfaces/IAudit';
 
 @Injectable()
 export class AuditoriaService {
-
+    private auditoriaURL = 'http://localhost:3002/api/auditoria/matching';
     constructor(private http: Http) { }
 
     get(): Observable<IAudit[]> {
-        debugger;
-        return this.http.get('pacientesAudit.json')
+        return this.http.get(this.auditoriaURL)
             .map((res: Response) => res.json())
             .catch(this.handleError); //...errors if any
     }

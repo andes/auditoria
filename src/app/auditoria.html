@@ -8,7 +8,8 @@
             <i class="fa fa-search" style="float:left;margin:4px 4px 0 0"></i>
             <input #gb type="text" pInputText size="50" style="float:left" placeholder="Escriba para buscar...">
           </div>
-          <p-dataTable [value]="pacientesAudit" [rows]="10" [paginator]="true" [globalFilter]="gb" [responsive]="true">
+          <p-dataTable [value]="pacientesAudit" selectionMode="single" [rows]="15" (onRowSelect)="onRowSelect($event)" [paginator]="true"
+            [globalFilter]="gb" [responsive]="true">
             <p-headerColumnGroup>
               <p-row>
                 <p-column [style]="{'width':'100%'}" header="Matching de Pacientes" colspan="7"></p-column>
@@ -27,14 +28,26 @@
                 <p-column [style]="{'width':'10%'}" header="Documento"></p-column>
               </p-row>
             </p-headerColumnGroup>
-            <p-column field="pacienteOriginal.nombre" header="Nombre"></p-column>
-            <p-column field="pacienteOriginal.apellido" header="Apellido"></p-column>
-            <p-column field="pacienteOriginal.documento" header="Documento"></p-column>
-            <p-column field="pacienteMutante.nombre" header="Nombre"></p-column>
-            <p-column field="pacienteMutante.apellido" header="Apellido"></p-column>
-            <p-column field="pacienteMutante.documento" header="Documento"></p-column>
-            <p-column field="matching" header="% de Matching"></p-column>
+            <p-column field="paciente1.nombre" header="Nombre"></p-column>
+            <p-column field="paciente1.apellido" header="Apellido"></p-column>
+            <p-column field="paciente1.documento" header="Documento"></p-column>
+            <p-column field="paciente2.nombre" header="Nombre"></p-column>
+            <p-column field="paciente2.apellido" header="Apellido"></p-column>
+            <p-column field="paciente2.documento" header="Documento"></p-column>
+            <p-column field="match" header="% de Matching"></p-column>
           </p-dataTable>
+          <!--<p-dialog header="Car Details" [(visible)]="displayDialog" [responsive]="true" showEffect="fade" [modal]="true">
+            <div class="ui-grid ui-grid-responsive ui-fluid">
+              <div class="ui-grid-row">
+                lalalala
+              </div>
+            <footer>
+              <div class="ui-dialog-buttonpane ui-widget-content ui-helper-clearfix">
+                <button type="button" pButton icon="fa-close"  label="Delete"></button>
+                <button type="button" pButton icon="fa-check"  label="Save"></button>
+              </div>
+            </footer>
+          </p-dialog>-->
         </div>
       </div>
     </form>

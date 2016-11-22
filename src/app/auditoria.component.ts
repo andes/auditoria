@@ -4,7 +4,7 @@ import {
    from '@angular/core';
 import {FormBuilder,FormGroup,Validators,FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { AuditoriaService } from './services/auditoria.service';
-import {IAudit} from './audit';
+import {IAudit} from './interfaces/IAudit';
 
 @Component({
   templateUrl: 'auditoria.html',
@@ -12,9 +12,9 @@ import {IAudit} from './audit';
 export class AuditoriaComponent implements OnInit{
 
      searchForm: FormGroup;
-
-     //pacientesAudit:IAudit[];
-     pacientesAudit:any[];
+     displayDialog: boolean;
+     pacientesAudit:IAudit[];
+     
 
      constructor(private formBuilder: FormBuilder , private auditoriaService: AuditoriaService) {}
 
@@ -27,61 +27,13 @@ export class AuditoriaComponent implements OnInit{
             // matching: ['']
         });
 
-
-        this.pacientesAudit = [
-         {
-           
-          "pacienteOriginal":{
-              "nombre":"Juan",
-              "apellido":"Per",
-              "documento": "27381749"
-              },
-          "pacienteMutante":{
-              "nombre":"Juan",
-              "apellido":"Perez",
-              "documento": "27381849"
-              },
-            "matching": "75"
-          
-         },
-         {
-            "pacienteOriginal":{
-              "nombre":"Jorge",
-              "apellido":"Galman",
-              "documento": "13569654"
-              },
-          "pacienteMutante":{
-              "nombre":"Jorge",
-              "apellido":"Hallman",
-              "documento": "13569654"
-              },
-            "matching": "90"
-
-         },
-         {
-            "pacienteOriginal":{
-              "nombre":"Hugo Héctor",
-              "apellido":"Fernandez",
-              "documento": "27381849"
-              },
-          "pacienteMutante":{
-              "nombre":"Hugo Victor",
-              "apellido":"Fernández",
-              "documento": "27318849"
-              },
-            "matching": "95"
-
-         }
-            
-    ];
-        //this.loadAuditorias();
-       
+    this.loadAuditorias(); 
      }
 
 loadAuditorias() {
         this.auditoriaService.get()
          .subscribe(
-            lAudit => this.pacientesAudit = lAudit, 
+            lAudit => {this.pacientesAudit = lAudit; debugger}, 
             err => {
                 if (err) {
                     console.log(err);
@@ -89,4 +41,12 @@ loadAuditorias() {
             });
 
   }
+
+onRowSelect(event) {
+        // this.newCar = false;
+        // this.car = this.cloneCar(event.data);
+        this.displayDialog = true;
+    }
+
+
 }
