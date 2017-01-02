@@ -7,8 +7,10 @@ import { AuditoriaService } from './services/auditoria.service';
 import {IAudit} from './interfaces/IAudit';
 
 @Component({
-  templateUrl: 'auditoria.html',
+    selector: 'auditoria',
+    templateUrl: 'auditoria.html',
 })
+
 export class AuditoriaComponent implements OnInit{
 
      searchForm: FormGroup;

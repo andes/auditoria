@@ -1,9 +1,12 @@
+import { InicioComponent } from './inicio.component';
+import { duplicadoService } from './services/duplicado.service';
+import { DuplicadosComponent } from './duplicados.component';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { PlexModule } from 'andes-plex/src/lib/module';
-import { PlexService } from 'andes-plex/src/lib/core/service';
+import { Plex } from 'andes-plex/src/lib/core/service';
 import { routing, appRoutingProviders } from './app.routing';
 
 // My Services
@@ -20,7 +23,9 @@ import { AuditoriaComponent } from './auditoria.component';
 @NgModule({
   declarations: [
     AppComponent,
-    AuditoriaComponent
+    AuditoriaComponent,
+    DuplicadosComponent,
+    InicioComponent
   ],
   imports: [
     BrowserModule,
@@ -34,9 +39,10 @@ import { AuditoriaComponent } from './auditoria.component';
     ToggleButtonModule
   ],
   providers: [
-    PlexService,  
+    Plex,  
     appRoutingProviders,
-    AuditoriaService
+    AuditoriaService,
+    duplicadoService
     ],
   bootstrap: [AppComponent]
 })
