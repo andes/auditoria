@@ -1,0 +1,94 @@
+<plex-box type="success" title="Auditoría por Bloque">
+    <div class="row">
+        <div class="col-md-12">
+            <plex-select [data]="tiposClaves" [(ngModel)]="tipoClave" (change)="onClaveChange($event)" placeholder="Seleccione..." label="Usar Tipo Clave:">
+            </plex-select>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-1">
+            <plex-button type="link" icon="skip-previous" (click)="verClave(false)"></plex-button>
+        </div>
+        <div class="col-md-4">
+            <div class="input-group">
+                <span class="input-group-addon">Clave de Bloque:</span>
+                <input type="text" id="claveActual" name="claveActual" class="form-control" [(ngModel)]="claveActual" (change)="onChageOneKey($event)">
+            </div>
+        </div>
+        <div class="col-md-1">
+            <plex-button type="link" icon="skip-next" (click)="verClave(true)"></plex-button>
+        </div>
+        <div class="col-md-6 text-right">
+            <plex-button type="success" (click)="validarSisa()" label="Validar con Sisa"></plex-button>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+
+        </div>
+    </div>
+    <ul class="list-group">
+        <li class="list-group-item" *ngFor="let pacList of pacientes; let i = index">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <span class="badge">{{i}}</span>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <span><b>Paciente:</b> {{pacList.paciente.apellido}}, {{pacList.paciente.nombre}}</span>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <span><b>DNI:</b> {{pacList.paciente.documento}}</span>
+                        </div>
+                        <div class="col-md-4">
+                            <span><b>Sexo:</b> {{pacList.paciente.sexo}}</span>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <span><b>Fecha Nacimiento:</b> {{pacList.paciente.fechaNacimiento | date: 'dd/MM/yyyy'}}</span>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <span><b>Dirección:</b></span>
+                            <span *ngFor="let dir of pacList.paciente.direccion">{{dir.valor}} ({{dir.ubicacion.localidad.nombre}} - Prov. {{dir.ubicacion.provincia.nombre}}) / </span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="row" *ngIf="pacList.matcheos">
+                        <div class="col-md-12">
+                            <span><b>Matcheos:</b> 
+                            <span >
+                                {{pacList.matcheos.entidad}}: {{pacList.matcheos.matcheo}} </span></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="btn-group" role="toolbar">
+                                <span>Fusionar con: </span>
+                                <ul>
+                                    <li class="btn btn-sm btn-default btn-group" *ngFor="let pc of pacientes; let j = index" (click)="fusionaPaciente(pacList.paciente,pc.paciente)">
+                                        {{j}}</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row "><br>
+                        <div class="col-md-12">
+                            <plex-button type="danger" icon="close-circle" (click)="eliminarPaciente(pacList.paciente) " label="Eliminar "></plex-button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </li>
+    </ul>
+</plex-box>

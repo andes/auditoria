@@ -1,6 +1,6 @@
 import { InicioComponent } from './inicio.component';
-import { duplicadoService } from './services/duplicado.service';
-import { DuplicadosComponent } from './duplicados.component';
+import { auditoriaPorBloqueService } from './services/auditoriaPorBloque.service';
+import { auditoriaPorBloqueComponent } from './auditoriaPorBloque.component';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -24,7 +24,7 @@ import { AuditoriaComponent } from './auditoria.component';
   declarations: [
     AppComponent,
     AuditoriaComponent,
-    DuplicadosComponent,
+    auditoriaPorBloqueComponent,
     InicioComponent
   ],
   imports: [
@@ -42,7 +42,7 @@ import { AuditoriaComponent } from './auditoria.component';
     Plex,  
     appRoutingProviders,
     AuditoriaService,
-    duplicadoService
+    auditoriaPorBloqueService
     ],
   bootstrap: [AppComponent]
 })

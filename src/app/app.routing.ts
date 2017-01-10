@@ -1,5 +1,5 @@
 import { InicioComponent } from './inicio.component';
-import { DuplicadosComponent } from './duplicados.component';
+import { auditoriaPorBloqueComponent } from './auditoriaPorBloque.component';
 import { Routes, RouterModule } from '@angular/router';
 import { ModuleWithProviders } from '@angular/core';
 import { AuditoriaComponent } from './auditoria.component';
@@ -8,7 +8,7 @@ import { AuditoriaComponent } from './auditoria.component';
 const appRoutes: Routes = [
  { path: 'inicio', component: InicioComponent},
  { path: 'auditoria', component: AuditoriaComponent}, 
- { path: 'duplicado', component: DuplicadosComponent},
+ { path: 'auditoriaPorBloque', component: auditoriaPorBloqueComponent},
  { path: '**', redirectTo: 'inicio'},
 ];
 

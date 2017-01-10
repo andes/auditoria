@@ -1,3 +1,4 @@
+import { AuditoriaPage } from './../../e2e/app.po';
 import { Plex } from 'andes-plex/src/lib/core/service';
 import { Component } from '@angular/core';
 import { SidebarItem } from 'andes-plex/src/lib/app/sidebar-item.class';
@@ -17,8 +18,8 @@ export class AppComponent {
     loadSideBar() {
         let items = [
         new SidebarItem('Inicio', 'creation', '/inicio'),
-        new SidebarItem('Auditorias', 'creation', '/auditoria'),
-        new SidebarItem('Duplicados', 'blur', '/duplicado'),
+        new SidebarItem('Auditorias', 'blur-linear', '/auditoria'),
+        new SidebarItem('Auditoria x Bloque', 'blur', '/auditoriaPorBloque'),
         ];
         this.plex.initStaticItems(items);
     }
