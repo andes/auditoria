@@ -37,7 +37,6 @@ export class auditoriaPorBloqueComponent implements OnInit {
 
     loadClaves() {
         this.duplicadosService.getListaBloques(this.tipoClave.id).subscribe(resultado => {
-            debugger;
             if(resultado){
                 var lista;
                 lista = resultado
@@ -92,6 +91,7 @@ export class auditoriaPorBloqueComponent implements OnInit {
     }
 
     loadPacientedPorBloque(){
+        debugger;
         this.duplicadosService.getPacientesBloque(this.tipoClave.id, this.claveActual).subscribe(resultado => {
             debugger;
             if(resultado){
@@ -120,6 +120,15 @@ export class auditoriaPorBloqueComponent implements OnInit {
             }
         });
     }
+
+    validarSintys(){
+            this.duplicadosService.getBloqueValidarSintys(this.tipoClave.id, this.claveActual).subscribe(resultado => {
+                debugger;
+                if(resultado){
+                    this.pacientes = resultado;
+                }
+            });
+        }
 
 
     eliminarPaciente(paciente: IPaciente){

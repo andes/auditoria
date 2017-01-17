@@ -10,7 +10,7 @@ import 'rxjs/add/operator/catch';
 
 @Injectable()
 export class auditoriaPorBloqueService {
-    private duplicadosURL = 'http://localhost:3002/api/auditoria/bloque/';
+    private duplicadosURL = 'http://localhost:3002/api/auditoria/bloques/';
     constructor(private http: Http) { }
 
     getListaBloques(tipoClave:Number): Observable<Number[]> {
@@ -20,13 +20,19 @@ export class auditoriaPorBloqueService {
     }
 
    getPacientesBloque(tipoClave:Number,clave:String): Observable<IListaMatcheo[]> {
-        return this.http.get(this.duplicadosURL+"paciente/"+tipoClave+"/"+clave)
+        return this.http.get(this.duplicadosURL+"pacientes/"+tipoClave+"/"+clave)
             .map((res: Response) => res.json())
             .catch(this.handleError); //...errors if any
     }
 
     getBloqueValidarSisa(tipoClave:Number,clave:String): Observable<IListaMatcheo[]> {
-        return this.http.get(this.duplicadosURL+"pacienteSisa/"+tipoClave+"/"+clave)
+        return this.http.get(this.duplicadosURL+"pacientesSisa/"+tipoClave+"/"+clave)
+            .map((res: Response) => res.json())
+            .catch(this.handleError); //...errors if any
+    }
+
+    getBloqueValidarSintys(tipoClave:Number,clave:String): Observable<IListaMatcheo[]> {
+        return this.http.get(this.duplicadosURL+"pacientesSintys/"+tipoClave+"/"+clave)
             .map((res: Response) => res.json())
             .catch(this.handleError); //...errors if any
     }
@@ -36,7 +42,7 @@ export class auditoriaPorBloqueService {
         let headers      = new Headers({ 'Content-Type': 'application/json' }); // ... Set content type to JSON
         let options       = new RequestOptions({ headers: headers }); // Create a request option
         debugger;
-        return this.http.delete(this.duplicadosURL + "paciente/" + paciente.id, options) // ...using post request
+        return this.http.delete(this.duplicadosURL + "pacientes/" + paciente.id, options) // ...using post request
                          .map((res:Response) => res.json()) // ...and calling .json() on the response to return data
                          .catch(this.handleError); //...errors if any
     }
