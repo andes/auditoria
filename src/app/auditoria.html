@@ -1,55 +1,67 @@
-<div class="panel panel-default">
-  <div class="panel-heading">Listado de Pacientes</div>
-  <div class="panel-body">
-    <form [formGroup]="searchForm" class="form-horizontal">
-      <div class="form_group">
-        <div class="form-group">
-          <div class="ui-widget-header ui-helper-clearfix" style="padding:4px 10px;border-bottom: 0 none">
-            <i class="fa fa-search" style="float:left;margin:4px 4px 0 0"></i>
-            <input #gb type="text" pInputText size="50" style="float:left" placeholder="Escriba para buscar...">
+<div class="col-sm-12">
+  <div class="row">
+    <div class="col-md-7">
+      <plex-box type="danger" title="Pacientes que requieren revisión">
+        <!-- Search results -->
+        <div>
+          <div class="table">
+            <table class="table table-hover">
+              <thead>
+                <tr>
+                  <th>Documento</th>
+                  <th>Nombre</th>
+                  <th>Apellido</th>
+                  <th>Fecha Nac.</th>
+                  <th>Sexo</th>
+                  <th>Estado</th>
+                  <th>% Sisa</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr class="hover" *ngFor="let paciente of pacientesAudit" (click)="mostrarDatos(paciente)">
+                  <td>{{paciente.documento}}</td>
+                  <td>{{paciente.nombre| uppercase}}</td>
+                  <td>{{paciente.apellido| uppercase}}</td>
+                  <td>{{paciente.fechaNacimiento | date:'dd-MM-yyyy'}}</td>
+                  <td>{{paciente.sexo}}</td>
+                  <td>{{paciente.estado}}</td>
+                  <td>{{paciente.matchSisa * 100}}%</td>
+                </tr>
+              </tbody>
+            </table>
           </div>
-          <p-dataTable [value]="pacientesAudit" selectionMode="single" [rows]="15" (onRowSelect)="onRowSelect($event)" [paginator]="true"
-            [globalFilter]="gb" [responsive]="true">
-            <p-headerColumnGroup>
-              <p-row>
-                <p-column [style]="{'width':'100%'}" header="Matching de Pacientes" colspan="7"></p-column>
-              </p-row>
-              <p-row>
-                <p-column [style]="{'width':'40%'}" header="Paciente Original" colspan="3"></p-column>
-                <p-column [style]="{'width':'40%'}" header="Paciente Mutante" colspan="3"></p-column>
-                <p-column [style]="{'width':'20%'}" header="% de Matching" colspan="1" rowspan="2"></p-column>
-              </p-row>
-              <p-row>
-                <p-column [style]="{'width':'10%'}" header="Nombre"></p-column>
-                <p-column [style]="{'width':'10%'}" header="Apellido"></p-column>
-                <p-column [style]="{'width':'10%'}" header="Documento"></p-column>
-                <p-column [style]="{'width':'10%'}" header="Nombre"></p-column>
-                <p-column [style]="{'width':'10%'}" header="Apellido"></p-column>
-                <p-column [style]="{'width':'10%'}" header="Documento"></p-column>
-              </p-row>
-            </p-headerColumnGroup>
-            <p-column field="paciente1.nombre" header="Nombre"></p-column>
-            <p-column field="paciente1.apellido" header="Apellido"></p-column>
-            <p-column field="paciente1.documento" header="Documento"></p-column>
-            <p-column field="paciente2.nombre" header="Nombre"></p-column>
-            <p-column field="paciente2.apellido" header="Apellido"></p-column>
-            <p-column field="paciente2.documento" header="Documento"></p-column>
-            <p-column field="match" header="% de Matching"></p-column>
-          </p-dataTable>
-          <!--<p-dialog header="Car Details" [(visible)]="displayDialog" [responsive]="true" showEffect="fade" [modal]="true">
-            <div class="ui-grid ui-grid-responsive ui-fluid">
-              <div class="ui-grid-row">
-                lalalala
-              </div>
-            <footer>
-              <div class="ui-dialog-buttonpane ui-widget-content ui-helper-clearfix">
-                <button type="button" pButton icon="fa-close"  label="Delete"></button>
-                <button type="button" pButton icon="fa-check"  label="Save"></button>
-              </div>
-            </footer>
-          </p-dialog>-->
         </div>
-      </div>
-    </form>
+      </plex-box>
+    </div>
+    <!--fin de col-md-7 -->
+    <div class="col-md-5">
+      <plex-box *ngIf=mostrarPaciente type="info" title="Panel de operaciones">
+        <h2>{{pacienteSelected.nombre}} {{pacienteSelected.apellido}}</h2>
+        <hr>
+        <h4><b>Documento: </b>{{pacienteSelected.documento}}</h4>
+        <h4><b>Fecha Nac.: </b> {{pacienteSelected.fechaNacimiento | date:'dd-MM-yyyy'}}</h4>
+        <h4><b>Sexo: </b> {{pacienteSelected.sexo}}</h4>
+        <h4><b>Estado: </b>{{pacienteSelected.estado}}</h4>
+        <plex-button icon="account-search" type="primary" label="Consultar Sisa" (click)="onValidate(pacienteSelected)"></plex-button>
+      </plex-box>
+      <plex-loader *ngIf=loading></plex-loader>
+      <plex-box *ngIf=validate type="success" title="Información de fuente auténtica">
+        <h2>Pacientes encontrados <span class="badge">{{datosSisa.length}}</span> </h2>
+        <table class="table table-striped">
+          <tr *ngFor="let pacienteSisa of datosSisa">
+            <td><b>Nombre y Apellido:</b> {{pacienteSisa.nombre}} {{pacienteSisa.apellido}} </td>
+            <td><b>Fec de Nac.:</b> {{pacienteSisa.fechaNacimiento | date: 'dd-MM-yyyy'}} </td>
+            <td><b>Sexo:</b> {{pacienteSisa.sexo}} </td>
+            <td>
+              <plex-button icon="account-check" type="success" label="Validar" (click)="fusionar(pacienteSisa)"></plex-button>
+            </td>
+          </tr>
+        </table>
+        <div *ngIf=mensaje class="alert" role="alert">
+          <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+          <span class="sr-only">Error:</span> {{mensaje}}
+        </div>
+      </plex-box>
+    </div>
   </div>
 </div>

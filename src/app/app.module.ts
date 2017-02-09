@@ -20,6 +20,8 @@ import {ToggleButtonModule} from 'primeng/primeng';
 import { AppComponent } from './app.component';
 import { AuditoriaComponent } from './auditoria.component';
 
+import { Server } from 'andes-shared/src/lib/server/server.service';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -42,7 +44,8 @@ import { AuditoriaComponent } from './auditoria.component';
     Plex,  
     appRoutingProviders,
     AuditoriaService,
-    auditoriaPorBloqueService
+    auditoriaPorBloqueService,
+    Server
     ],
   bootstrap: [AppComponent]
 })
