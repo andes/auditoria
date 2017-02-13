@@ -40,6 +40,8 @@ export class AuditoriaComponent implements OnInit {
   loading: boolean = false;
   datosSisa = [];
   mensaje = null;
+  loadingPrimaryTable = false;
+  encontradosSisa = false;
 
   constructor(private formBuilder: FormBuilder, private auditoriaService: AuditoriaService, private plex: Plex) {}
 
@@ -78,10 +80,11 @@ export class AuditoriaComponent implements OnInit {
   }
 
   loadAuditorias() {
-
+    this.loadingPrimaryTable = true;
     this.auditoriaService.get()
       .subscribe(
         paciente => {
+          this.loadingPrimaryTable = false;
           this.pacientesAudit = paciente;
 
         },
@@ -95,6 +98,7 @@ export class AuditoriaComponent implements OnInit {
 
   mostrarDatos(paciente: any) {
     this.mostrarPaciente = true;
+    this.validate = false;
     this.pacienteSelected.id = paciente.id;
     this.pacienteSelected.apellido = paciente.apellido;
     this.pacienteSelected.nombre = paciente.nombre;
@@ -108,7 +112,6 @@ export class AuditoriaComponent implements OnInit {
 
 
   onValidate(paciente: any) {
-    this.validate = false;
     this.loading = true;
     this.mensaje = null;
 
@@ -131,7 +134,6 @@ export class AuditoriaComponent implements OnInit {
     this.auditoriaService.patch(paciente.id, patch)
       .subscribe(
         resultado => {
-          debugger;
           this.loading = false;
           this.validate = true;
           if(resultado.length<=0)
@@ -155,6 +157,7 @@ export class AuditoriaComponent implements OnInit {
         let elSelected = this.pacienteSelected;
         this.pacienteSelected.nombre = pacienteSisa.nombre;
         this.pacienteSelected.apellido = pacienteSisa.apellido;
+        this.pacienteSelected.documento = pacienteSisa.documento;
         this.pacienteSelected.fechaNacimiento = pacienteSisa.fechaNacimiento;
         this.pacienteSelected.sexo = pacienteSisa.sexo;
         this.pacienteSelected.estado = "validado";

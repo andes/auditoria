@@ -32,7 +32,9 @@
           </div>
         </div>
       </plex-box>
+      <plex-loader *ngIf=loadingPrimaryTable></plex-loader>   
     </div>
+ 
     <!--fin de col-md-7 -->
     <div class="col-md-5">
       <plex-box *ngIf=mostrarPaciente type="info" title="Panel de operaciones">
@@ -50,6 +52,7 @@
         <table class="table table-striped">
           <tr *ngFor="let pacienteSisa of datosSisa">
             <td><b>Nombre y Apellido:</b> {{pacienteSisa.nombre}} {{pacienteSisa.apellido}} </td>
+            <td><b>Documento:</b> {{pacienteSisa.documento}}</td>
             <td><b>Fec de Nac.:</b> {{pacienteSisa.fechaNacimiento | date: 'dd-MM-yyyy'}} </td>
             <td><b>Sexo:</b> {{pacienteSisa.sexo}} </td>
             <td>
